@@ -13,6 +13,7 @@
         <div class="jumbotron text-center">
             <h1>Mission to Mars</h1>
             <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
+            <p>May take a few minutes</p>
         </div>
         <!-- Mars News-->
         <div class="row" id="mars-news">
@@ -22,6 +23,41 @@
                         <h2>Latest Mars News</h2>
                         <h4 class="media-heading">{{mars.news_title}}</h4>
                         <p>{{mars.news_paragraph}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="mars-hems">
+            <!-- Hemispheres-->
+            <div class="col-md-12">
+                <div class="media">
+                    <div class="media-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h4>Cerberus Hemisphere</h4>
+                                <a href="{{mars.cerberus}}">
+                                    <img src="{{mars.cerberus}}" class="img-responsive" alt="Cerberus" />
+                                </a> 
+                            </div>
+                            <div class="col-md-3">
+                                <h4>Schiaparelli Hemisphere</h4>
+                                <a href="{{mars.schiaparelli}}">
+                                    <img src="{{mars.schiaparelli}}" class="img-responsive" alt="Schiaparelli" />
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <h4>Syrtis Major Hemisphere</h4>
+                                <a href="{{mars.syrtis}}">
+                                    <img src="{{mars.syrtis}}" class="img-responsive" alt="Syrtis Major" />
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <h4>Valles Marineris Hemisphere</h4>
+                                <a href="{{mars.valles_marineris}}">
+                                    <img src="{{mars.valles_marineris}}" class="img-responsive" alt="Valles Marineris" />
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

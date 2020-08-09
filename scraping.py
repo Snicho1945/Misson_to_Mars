@@ -9,13 +9,17 @@ def scrape_all():
     browser = Browser('chrome', **executable_path, headless=True)
 
     news_title, news_paragraph = mars_news(browser)
-
+    # data into dict
     data = {
         "news_title": news_title,
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(),
+        "cerberus": mars_cerb(browser),
+        "schiaparelli": mars_schia(browser),
+        "syrtis": mars_syrtis(browser),
+        "valles_marineris": mars_valles(browser)
     }
     # stop webdriver and return data
     browser.quit()
@@ -56,7 +60,7 @@ def featured_image(browser):
     full_image_elem.click()
 
     # find "more info" button and click
-    browser.is_element_present_by_text('more info', wait_time=1)
+    browser.is_element_present_by_text('more info', wait_time=2)
     more_info_elem = browser.links.find_by_partial_text('more info')
     more_info_elem.click()
 
@@ -75,6 +79,74 @@ def featured_image(browser):
     img_url = f'https://www.jpl.nasa.gov{img_url_rel}'
     return img_url
 
+def mars_cerb(browser):
+
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+
+    full_image_elem = browser.links.find_by_href('/search/map/Mars/Viking/cerberus_enhanced')[1]
+    full_image_elem.click()
+
+    # parse
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+
+    img_url_rel = img_soup.select_one('ul li a').get("href")
+
+    img_url = img_url_rel
+    return img_url
+
+def mars_schia(browser):
+
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+
+    full_image_elem = browser.links.find_by_href('/search/map/Mars/Viking/schiaparelli_enhanced')[1]
+    full_image_elem.click()
+
+    # parse
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+
+    img_url_rel = img_soup.select_one('ul li a').get("href")
+
+    img_url = img_url_rel
+    return img_url
+
+def mars_syrtis(browser):
+
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+
+    full_image_elem = browser.links.find_by_href('/search/map/Mars/Viking/syrtis_major_enhanced')[1]
+    full_image_elem.click()
+
+    # parse
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+
+    img_url_rel = img_soup.select_one('ul li a').get("href")
+   
+    img_url = img_url_rel
+    return img_url
+
+def mars_valles(browser):
+
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+
+    full_image_elem = browser.links.find_by_href('/search/map/Mars/Viking/valles_marineris_enhanced')[1]
+    full_image_elem.click()
+
+    # parse
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+
+    img_url_rel = img_soup.select_one('ul li a').get("href")
+   
+    img_url = img_url_rel
+    return img_url
+
 # ## Mars Facts
 def mars_facts():
 
@@ -89,6 +161,7 @@ def mars_facts():
     df.set_index('Description', inplace=True)
 
     return df.to_html(classes="table table-striped")
+
 
 if __name__ == "__main__":
     # if running as script, print scraped data
